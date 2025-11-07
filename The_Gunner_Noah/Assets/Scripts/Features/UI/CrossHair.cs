@@ -6,10 +6,10 @@ namespace Features.UI
     {
         void Start()
         {
-            Cursor.visible = false;
+            // Cursor.visible = false;
         }
 
-        void Update()
+        void FixedUpdate()
         {
             transform.position = Input.mousePosition;
         }

@@ -1,3 +1,4 @@
+using Features.Item.Weapon;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -20,6 +21,9 @@ namespace Features.Player
         public Transform groundCheck;
         public float groundDistance = 0.2f;
 
+
+        [SerializeField] private Gun gunEquipped;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -30,6 +34,11 @@ namespace Features.Player
         {
             MovePlayer();
             RotatePlayer();
+            if (gunEquipped != null)
+            {
+                BsLogger.Log("발사!");
+                gunEquipped.TryFire();
+            }
         }
 
         private void MovePlayer()
