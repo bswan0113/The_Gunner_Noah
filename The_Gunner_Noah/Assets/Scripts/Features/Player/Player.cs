@@ -19,6 +19,7 @@ namespace Features.Player
         [Header("Ground Check")]
         public Transform groundCheck;
         public float groundDistance = 0.2f;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -78,6 +79,17 @@ namespace Features.Player
         bool IsGrounded()
         {
             return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayerMask);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            // 부딪힌 오브젝트의 태그가 "Water" 라면
+            if (other.CompareTag("Water"))
+            {
+                // 여기에 스태미나 감소 로직을 넣으세요.
+                // 예: stamina -= 10f * Time.deltaTime;
+                Debug.Log("물 속에 있다! 스태미나 감소!");
+            }
         }
     }
 }
