@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace Features
+namespace Features.Common
 {
     public interface IPushable
     {

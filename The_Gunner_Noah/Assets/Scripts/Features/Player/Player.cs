@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.Managers;
+using Features.Common;
 using Features.Inventory;
-using Features.Item.abc;
+using Features.Item.Common;
+using Features.Item.Potion;
+using Features.Item.Weapon.Gun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;

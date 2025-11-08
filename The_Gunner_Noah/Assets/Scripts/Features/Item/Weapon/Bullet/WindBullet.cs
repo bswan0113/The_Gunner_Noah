@@ -1,8 +1,7 @@
-using Features.Item.Weapon.Common;
+using Features.Common;
 using UnityEngine;
-using Utils;
 
-namespace Features.Item.Weapon.Normal
+namespace Features.Item.Weapon.Bullet
 {
     public class WindBullet : BulletObject
     {

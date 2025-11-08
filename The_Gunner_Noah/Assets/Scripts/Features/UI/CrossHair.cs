@@ -1,6 +1,8 @@
 using Features.Inventory;
 using Features.Item;
-using Features.Item.abc;
+using Features.Item.Common;
+using Features.Item.Potion;
+using Features.Item.Weapon.Gun;
 using UnityEngine;
 
 namespace Features.UI

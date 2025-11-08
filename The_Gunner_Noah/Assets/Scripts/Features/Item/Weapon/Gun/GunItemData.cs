@@ -1,15 +1,16 @@
+using Features.Item.Common;
+using Features.Item.Weapon.Bullet;
 using UnityEngine;
-using Utils;
 
-namespace Features.Item.abc
+namespace Features.Item.Weapon.Gun
 {
     public abstract class GunItemData : ItemData
     {
         [Header("Gun Stats")]
         public GunType gunType;
         public float fireRate;
-        public int ammoCapacity;
-        public float reloadTime;
+        // public int ammoCapacity;
+        // public float reloadTime;
         public float staminaCost;
 
         public BulletData bulletData;
@@ -18,4 +19,9 @@ namespace Features.Item.abc
 
         public abstract void Fire(Transform firePoint);
     }
+
+    public enum GunType
+        {
+            Normal, Wind, Hook
+        }
 }

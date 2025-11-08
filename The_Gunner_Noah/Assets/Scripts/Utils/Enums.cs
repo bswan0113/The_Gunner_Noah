@@ -19,8 +19,5 @@ namespace Utils
         Evaded    // 상대가 회피함
     }
 
-    public enum GunType
-    {
-        Normal, Wind, Hook
-    }
+
 }

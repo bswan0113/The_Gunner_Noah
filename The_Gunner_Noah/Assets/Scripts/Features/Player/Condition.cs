@@ -1,39 +1,42 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Condition : MonoBehaviour
+namespace Features.Player
 {
-    public float curValue;
-    public float startValue = 100f;
-    public float maxValue = 100f;
-    public float passiveValue;
-    public Image uiBar;
-
-    void Start()
+    public class Condition : MonoBehaviour
     {
-        curValue = startValue;
-    }
+        public float curValue;
+        public float startValue = 100f;
+        public float maxValue = 100f;
+        public float passiveValue;
+        public Image uiBar;
 
-    void Update()
-    {
-        if (startValue > 0)
+        void Start()
         {
-            uiBar.fillAmount = GetPercentage();
+            curValue = startValue;
         }
-    }
 
-    float GetPercentage()
-    {
-        return curValue / maxValue;
-    }
+        void Update()
+        {
+            if (startValue > 0)
+            {
+                uiBar.fillAmount = GetPercentage();
+            }
+        }
 
-    public void Add(float value)
-    {
-        curValue = Mathf.Min(curValue + value, maxValue);
-    }
+        float GetPercentage()
+        {
+            return curValue / maxValue;
+        }
 
-    public void Subtract(float value)
-    {
-        curValue = Mathf.Max(curValue - value, 0f);
+        public void Add(float value)
+        {
+            curValue = Mathf.Min(curValue + value, maxValue);
+        }
+
+        public void Subtract(float value)
+        {
+            curValue = Mathf.Max(curValue - value, 0f);
+        }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.Item.abc
+namespace Features.Item.Common
 {
     public abstract class ItemData : ScriptableObject
     {

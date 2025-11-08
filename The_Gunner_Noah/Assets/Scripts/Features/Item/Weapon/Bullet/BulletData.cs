@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.Item.abc
+namespace Features.Item.Weapon.Bullet
 {
 
     [CreateAssetMenu(fileName = "New Bullet", menuName = "GunData/BulletData")]

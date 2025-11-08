@@ -1,16 +1,13 @@
-using Features.Item.abc;
 using TMPro;
 using UnityEngine;
 
-namespace Features.Item
+namespace Features.Item.Common
 {
     public class FieldItem : MonoBehaviour
     {
-        [Header("아이템 데이터")]
         [SerializeField]
         public ItemData itemData;
 
-        [Header("월드 스페이스 UI")]
         [SerializeField] private GameObject infoPanel;
         [SerializeField] private TextMeshProUGUI nameTextOnPanel;
         [SerializeField] private TextMeshProUGUI descriptionTextOnPanel;

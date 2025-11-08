@@ -1,7 +1,6 @@
-using Features.Item.abc;
 using UnityEngine;
 
-namespace Features.Item.Weapon.Common
+namespace Features.Item.Weapon.Bullet
 {
     public abstract class BulletObject : MonoBehaviour
     {

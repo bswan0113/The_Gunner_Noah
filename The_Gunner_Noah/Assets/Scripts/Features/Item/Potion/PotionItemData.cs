@@ -1,8 +1,7 @@
-using System;
-using Unity.VisualScripting;
+using Features.Item.Common;
 using UnityEngine;
 
-namespace Features.Item.abc
+namespace Features.Item.Potion
 {
     [CreateAssetMenu(fileName = "Potion_", menuName = "Potion")]
     public class PotionItemData : ItemData

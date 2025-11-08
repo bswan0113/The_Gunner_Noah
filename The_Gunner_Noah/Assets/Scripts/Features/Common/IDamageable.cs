@@ -1,4 +1,4 @@
-namespace Features
+namespace Features.Common
 {
     public interface IDamageable
     {
