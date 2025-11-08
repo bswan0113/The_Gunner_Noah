@@ -5,7 +5,7 @@ namespace Features.Environment
     public class Water : MonoBehaviour
     {
 
-        [SerializeField] private float riseSpeed = 0.1f;
+        [SerializeField] private float riseSpeed = 0.2f;
 
         void Update()
         {

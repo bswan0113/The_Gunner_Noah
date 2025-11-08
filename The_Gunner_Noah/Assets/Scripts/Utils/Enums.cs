@@ -18,4 +18,9 @@ namespace Utils
         Parried,  // 상대가 패리함
         Evaded    // 상대가 회피함
     }
+
+    public enum GunType
+    {
+        Normal, Wind, Hook
+    }
 }

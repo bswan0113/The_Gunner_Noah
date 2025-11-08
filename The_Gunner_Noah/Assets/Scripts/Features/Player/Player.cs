@@ -1,44 +1,76 @@
-using Features.Item.Weapon;
+using System.Collections;
+using System.Collections.Generic;
+using Core.Managers;
+using Features.Inventory;
+using Features.Item.abc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
 
 namespace Features.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IDamageable
     {
-        [Header("Movement")]
-        public float movementSpeed;
+        [Header("Movement")] public float movementSpeed;
         public float jumpPower;
         public LayerMask groundLayerMask;
         public float rotationSpeed = 15f;
+        public int jumpStamina = 10;
 
         private Rigidbody _rigidbody;
         private Transform cameraTransform;
         private Vector2 curMovementInput;
 
-        [Header("Ground Check")]
-        public Transform groundCheck;
+        [Header("Ground Check")] public Transform groundCheck;
         public float groundDistance = 0.2f;
 
 
-        [SerializeField] private Gun gunEquipped;
+        private GunItemData _gunEquipped;
+        private PotionItemData _potionEquipped;
+        public bool IsEquipped => _gunEquipped != null;
+        private PlayerInventory _playerInventory;
+
+        private bool _isShooting = false;
+        private float _nextFireTime = 0f;
+
+        [SerializeField] float waterEffectInterval = 0.5f;
+        private float _nextWaterEffectTime = 0f;
+        [SerializeField] float waterStaminaCost = 30f;
+
+        [SerializeField] private Transform gunHoldPoint;
+
+
+
+        public Condition health;
+        public Condition stamina;
+
+        private bool _isInWater = false;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             cameraTransform = Camera.main.transform;
+            _playerInventory = GetComponentInChildren<PlayerInventory>();
+        }
+
+        void Start()
+        {
+            // Test();
+        }
+
+
+        private void Update()
+        {
+            HandleShooting();
+            RecoverStamina(stamina.passiveValue * Time.deltaTime);
+            CheckAlive();
+            HandleEffectWater();
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
             RotatePlayer();
-            if (gunEquipped != null)
-            {
-                BsLogger.Log("발사!");
-                gunEquipped.TryFire();
-            }
         }
 
         private void MovePlayer()
@@ -68,9 +100,43 @@ namespace Features.Player
             if (lookDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                transform.rotation =
+                    Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
         }
+
+
+        bool IsGrounded()
+        {
+            return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayerMask);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Water"))
+            {
+                _isInWater = true;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Water"))
+            {
+                _isInWater = false;
+            }
+        }
+
+        public void EquipGun(GunItemData gunItemData)
+        {
+            _gunEquipped = gunItemData;
+        }
+
+        public void EquipPotion(PotionItemData potionItemData)
+        {
+            _potionEquipped = potionItemData;
+        }
+
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -79,25 +145,148 @@ namespace Features.Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if (stamina.curValue < jumpStamina) return;
             if (context.phase == InputActionPhase.Performed && IsGrounded())
             {
                 _rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                UseStamina(jumpStamina);
             }
         }
 
-        bool IsGrounded()
+        public void OnShoot(InputAction.CallbackContext context)
         {
-            return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayerMask);
+
+            if (context.started)
+            {
+                _isShooting = true;
+            }
+            else if (context.canceled)
+            {
+                _isShooting = false;
+            }
         }
 
-        private void OnTriggerStay(Collider other)
+        private void HandleShooting()
         {
-            // 부딪힌 오브젝트의 태그가 "Water" 라면
-            if (other.CompareTag("Water"))
+            if (!IsEquipped || !_isShooting)
             {
-                // 여기에 스태미나 감소 로직을 넣으세요.
-                // 예: stamina -= 10f * Time.deltaTime;
-                Debug.Log("물 속에 있다! 스태미나 감소!");
+                return;
+            }
+
+            if (Time.time >= _nextFireTime)
+            {
+                if (stamina.curValue < _gunEquipped.staminaCost) return;
+                UseStamina(_gunEquipped.staminaCost);
+                _nextFireTime = Time.time + 1f / _gunEquipped.fireRate;
+                _gunEquipped.Fire(gunHoldPoint);
+            }
+        }
+
+        public void OnChangeWeapon(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                GunItemData gunItemData = _playerInventory.ChangeNextItem(InventoryType.Gun) as GunItemData;
+                if (gunItemData != null) EquipGun(gunItemData);
+            }
+        }
+
+        public void OnChangePotion(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                PotionItemData potionItemData = _playerInventory.ChangeNextItem(InventoryType.Potion) as PotionItemData;
+                if (potionItemData != null) EquipPotion(potionItemData);
+            }
+        }
+
+        public void OnUsePotion(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                UsePotion();
+            }
+        }
+
+        private void UsePotion()
+        {
+            if (_potionEquipped == null) return;
+            if (_potionEquipped.potionType == PotionType.Heal)
+            {
+                health.Add(_potionEquipped.amount);
+            }
+            else if (_potionEquipped.potionType == PotionType.PowerUp)
+            {
+                StartCoroutine(ApplyPowerUp(_potionEquipped));
+            }
+
+            _playerInventory.RemovePotion(_potionEquipped);
+            _potionEquipped = null;
+
+
+        }
+
+        private IEnumerator ApplyPowerUp(PotionItemData potion)
+        {
+            float originalValue = 0f;
+
+            switch (potion.targetStat)
+            {
+                case PowerUpTargetStat.Jump:
+                    originalValue = jumpPower;
+                    jumpPower += potion.amount;
+                    break;
+            }
+
+            yield return new WaitForSeconds(potion.duration);
+
+            switch (potion.targetStat)
+            {
+                case PowerUpTargetStat.Jump:
+                    jumpPower = originalValue;
+                    break;
+            }
+        }
+
+        public void TakeDamage(float damage)
+        {
+            health.Subtract(damage);
+        }
+
+        public void UseStamina(float amount)
+        {
+            stamina.Subtract(amount);
+        }
+
+        private void RecoverStamina(float amount)
+        {
+            if (_isInWater) return;
+            stamina.Add(amount);
+        }
+
+        private void CheckAlive()
+        {
+            if (health.curValue <= 0 || transform.position.y < -10)
+            {
+                GameManager.Instance.GameOver();
+            }
+        }
+
+        private void HandleEffectWater()
+        {
+            if (!_isInWater) return;
+            if (Time.time >= _nextWaterEffectTime)
+            {
+                _nextWaterEffectTime  = Time.time + waterEffectInterval;
+                if (stamina.curValue > 0)
+                {
+                    UseStamina(waterStaminaCost);
+                }
+                else
+                {
+                    UseStamina(waterStaminaCost);
+                    health.Subtract(waterStaminaCost);
+                }
             }
         }
     }
