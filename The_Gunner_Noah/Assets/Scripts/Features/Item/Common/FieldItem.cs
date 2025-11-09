@@ -27,10 +27,17 @@ namespace Features.Item.Common
             if (itemData == null || infoPanel == null) return;
 
             if (nameTextOnPanel != null)
+            {
                 nameTextOnPanel.text = itemData.itemName;
+            }
             if (descriptionTextOnPanel != null)
+            {
                 descriptionTextOnPanel.text = itemData.itemDescription;
-
+            }
+            if (Camera.main != null)
+            {
+                infoPanel.transform.LookAt(Camera.main.transform);
+            }
             infoPanel.SetActive(true);
         }
 
