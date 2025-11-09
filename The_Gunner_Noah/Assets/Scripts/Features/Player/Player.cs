@@ -47,13 +47,22 @@ namespace Features.Player
         public Condition health;
         public Condition stamina;
 
+
+        private Vector3 _oriPosForTest;
+
         private bool _isInWater = false;
+
+        private bool _isPressingForward = false;
+        public bool IsPressingForward => _isPressingForward;
+
+        private bool IsParkouring = false;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             cameraTransform = Camera.main.transform;
             _playerInventory = GetComponentInChildren<PlayerInventory>();
+            _oriPosForTest = transform.position;
         }
 
         void Start()
@@ -78,6 +87,7 @@ namespace Features.Player
 
         private void MovePlayer()
         {
+            if (IsParkouring) return;
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
 
@@ -144,6 +154,17 @@ namespace Features.Player
         public void OnMove(InputAction.CallbackContext context)
         {
             curMovementInput = context.ReadValue<Vector2>();
+            if (context.control.path == "/Keyboard/w")
+            {
+                if (context.performed)
+                {
+                    _isPressingForward = true;
+                }
+                else if (context.canceled)
+                {
+                    _isPressingForward = false;
+                }
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
@@ -271,6 +292,11 @@ namespace Features.Player
         {
             if (health.curValue <= 0 || transform.position.y < -10)
             {
+                if (_oriPosForTest != null)
+                {
+                    transform.position = _oriPosForTest;
+                    return;
+                }
                 GameManager.Instance.GameOver();
             }
         }
@@ -292,5 +318,33 @@ namespace Features.Player
                 }
             }
         }
+
+        public void SetUseGravity()
+        {
+            _rigidbody.useGravity = true;
+            // _rigidbody.isKinematic = false;
+        }
+
+        public void ReleaseUseGravity()
+        {
+            _rigidbody.useGravity = false;
+            // _rigidbody.isKinematic = true;
+        }
+
+        public void SetPakurState(bool state)
+        {
+            IsParkouring = state;
+        }
+
+        public void SetRigidBodyConstraints(RigidbodyConstraints constraints)
+        {
+            _rigidbody.constraints |= constraints;
+        }
+
+        public void ReleaseRigidBodyConstraints(RigidbodyConstraints constraints)
+        {
+            _rigidbody.constraints &= ~constraints;
+        }
+
     }
 }

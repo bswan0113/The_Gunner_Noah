@@ -7,8 +7,6 @@ namespace Features.Item.Weapon.Gun
     public class HookGunData : GunItemData
     {
 
-        private bool _isRopeShot = false;
-
         public override void Fire(Transform firePoint, GameObject gameObject)
         {
             BulletData bullet = Instantiate(bulletData, firePoint.position, firePoint.rotation);

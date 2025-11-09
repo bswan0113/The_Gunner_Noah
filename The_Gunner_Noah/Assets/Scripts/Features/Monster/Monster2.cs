@@ -1,4 +1,5 @@
 using Features.Common;
+using Features.Obstacles;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ namespace Features.Monster
 
         private Rigidbody _rigidbody;
 
-        [SerializeField] private GameObject reward;
+        [SerializeField] private Operated reward;
         [SerializeField] private Slider hpBar;
 
         private void Awake()
@@ -39,7 +40,7 @@ namespace Features.Monster
             if (_hp <= 0)
             {
                 Destroy(gameObject);
-                Instantiate(reward, transform.position, transform.rotation);
+                reward.Action();
             }
         }
     }
