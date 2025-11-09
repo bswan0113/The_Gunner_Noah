@@ -17,11 +17,11 @@ namespace Features.Item.Weapon.Gun
 
         protected override InventoryType InventoryType => InventoryType.Gun;
 
-        public abstract void Fire(Transform firePoint);
+        public abstract void Fire(Transform firePoint, GameObject gameObject);
     }
 
     public enum GunType
-        {
-            Normal, Wind, Hook
-        }
+    {
+        Normal, Wind, Hook
+    }
 }

@@ -1,11 +1,11 @@
-using Features.Common;
+using System;
 using UnityEngine;
-using Utils;
 
 namespace Features.Item.Weapon.Bullet
 {
-    public class NormalBullet : BulletObject
+    public class HookBullet : BulletObject
     {
+
         protected override void Start()
         {
             base.Start();
@@ -17,13 +17,7 @@ namespace Features.Item.Weapon.Bullet
         }
         public override void Hit(GameObject hitObject)
         {
-            if(hitObject.CompareTag(owner.tag)) return;
-            IDamageable damageable = hitObject.GetComponent<IDamageable>();
-            BsLogger.Log($"Hit: {hitObject.name}");
-            if (damageable != null)
-            {
-                damageable.TakeDamage(_damage);
-            }
+
         }
 
     }

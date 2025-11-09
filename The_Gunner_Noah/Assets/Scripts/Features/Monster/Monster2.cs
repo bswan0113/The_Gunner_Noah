@@ -1,5 +1,6 @@
 using Features.Common;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Features.Monster
 {
@@ -13,22 +14,24 @@ namespace Features.Monster
         private Rigidbody _rigidbody;
 
         [SerializeField] private GameObject reward;
-
+        [SerializeField] private Slider hpBar;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _hp = 80;
-        }
-
-        void Update()
-        {
-            Death();
+            _hp = 10000;
+            _maxHp = _hp;
+            hpBar.value = _hp / _maxHp;
         }
 
         public void TakeDamage(float damage)
         {
             _hp -= damage;
+            hpBar.value = _hp / _maxHp;
+            if (_hp <= 0f)
+            {
+                this.Death();
+            }
         }
 
         private void Death()

@@ -181,7 +181,7 @@ namespace Features.Player
                 if (stamina.curValue < _gunEquipped.staminaCost) return;
                 UseStamina(_gunEquipped.staminaCost);
                 _nextFireTime = Time.time + 1f / _gunEquipped.fireRate;
-                _gunEquipped.Fire(gunHoldPoint);
+                _gunEquipped.Fire(gunHoldPoint, this.gameObject);
             }
         }
 

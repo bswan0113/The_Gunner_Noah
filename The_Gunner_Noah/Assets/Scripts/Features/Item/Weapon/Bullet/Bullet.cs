@@ -12,6 +12,8 @@ namespace Features.Item.Weapon.Bullet
 
         protected Vector3 _direction;
 
+        public GameObject owner;
+
 
         void Awake()
         {
@@ -30,9 +32,14 @@ namespace Features.Item.Weapon.Bullet
             _rigidbody.velocity = transform.forward * _speed;
         }
 
+        public void SetOwner(GameObject ownerObject)
+        {
+            owner = ownerObject;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")) return;
+            if (other.CompareTag(owner.tag)) return;
             Hit(other.gameObject);
         }
 
