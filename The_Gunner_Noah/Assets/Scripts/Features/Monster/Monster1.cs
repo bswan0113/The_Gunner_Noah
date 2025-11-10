@@ -107,11 +107,11 @@ namespace Features.Monster
             _state = MonsterState.Sleeping;
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, detectRange);
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     Gizmos.color = Color.yellow;
+        //     Gizmos.DrawWireSphere(transform.position, detectRange);
+        // }
 
 
         public enum MonsterState

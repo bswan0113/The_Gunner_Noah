@@ -7,7 +7,7 @@ namespace Features.Item.Weapon.Gun
     public class HookGunData : GunItemData
     {
 
-        public override void Fire(Transform firePoint, GameObject gameObject)
+        public override void Fire(Transform firePoint, GameObject gameObject, Vector3 targetPoint = new Vector3())
         {
             BulletData bullet = Instantiate(bulletData, firePoint.position, firePoint.rotation);
         }

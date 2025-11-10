@@ -8,7 +8,7 @@ namespace Features.Item.Weapon.Bullet
         private bool _hasHit = false;
         protected override void Start()
         {
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 0.5f);
         }
         public override void Hit(GameObject hitObject)
         {

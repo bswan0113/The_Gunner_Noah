@@ -17,7 +17,7 @@ namespace Features.Item.Weapon.Gun
 
         protected override InventoryType InventoryType => InventoryType.Gun;
 
-        public abstract void Fire(Transform firePoint, GameObject gameObject);
+        public abstract void Fire(Transform firePointm, GameObject gameObject,Vector3 targetPoint = new Vector3());
     }
 
     public enum GunType

@@ -39,6 +39,7 @@ namespace Features.Item.Weapon.Bullet
 
         private void OnTriggerEnter(Collider other)
         {
+            if(owner == null) return;
             if (other.CompareTag(owner.tag)) return;
             Hit(other.gameObject);
         }

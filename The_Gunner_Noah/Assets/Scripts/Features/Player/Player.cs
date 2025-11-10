@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Core.Managers;
 using Features.Common;
 using Features.Inventory;
@@ -57,6 +58,13 @@ namespace Features.Player
 
         private bool IsParkouring = false;
 
+        private bool _isAiming = false;
+
+        [SerializeField] CinemachineVirtualCamera fpsCamera;
+        [SerializeField] CinemachineFreeLook tpsCamera;
+
+        private Vector2 lookInput;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -82,22 +90,20 @@ namespace Features.Player
         private void FixedUpdate()
         {
             MovePlayer();
+
+        }
+
+        private void LateUpdate()
+        {
             RotatePlayer();
         }
 
         private void MovePlayer()
         {
             if (IsParkouring) return;
-            Vector3 camForward = cameraTransform.forward;
-            Vector3 camRight = cameraTransform.right;
+            float horizontal = _isAiming ? 0f : curMovementInput.x;
 
-            camForward.y = 0;
-            camRight.y = 0;
-
-            camForward.Normalize();
-            camRight.Normalize();
-
-            Vector3 moveDirection = (camForward * curMovementInput.y + camRight * curMovementInput.x).normalized;
+            Vector3 moveDirection = (transform.forward * curMovementInput.y + transform.right * horizontal).normalized;
 
             Vector3 finalVelocity = moveDirection * movementSpeed;
             finalVelocity.y = _rigidbody.velocity.y;
@@ -105,16 +111,22 @@ namespace Features.Player
             _rigidbody.velocity = finalVelocity;
         }
 
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            if (_isAiming) return;
+            lookInput = context.ReadValue<Vector2>();
+        }
+
         private void RotatePlayer()
         {
-            Vector3 lookDirection = cameraTransform.forward;
-            lookDirection.y = 0;
-
-            if (lookDirection != Vector3.zero)
+            if (_isAiming)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                transform.rotation =
-                    Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                transform.Rotate(Vector3.up * curMovementInput.x * rotationSpeed);
+
+            }
+            else
+            {
+                transform.Rotate(Vector3.up * lookInput.x * rotationSpeed / 10);
             }
         }
 
@@ -183,10 +195,27 @@ namespace Features.Player
             if (context.started)
             {
                 _isShooting = true;
+
             }
             else if (context.canceled)
             {
                 _isShooting = false;
+
+            }
+        }
+
+        public void OnAim(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _isAiming = true;
+                fpsCamera.Priority = 100;
+
+            }
+            else if (context.canceled)
+            {
+                _isAiming = false;
+                fpsCamera.Priority = 0;
             }
         }
 
@@ -202,7 +231,27 @@ namespace Features.Player
                 if (stamina.curValue < _gunEquipped.staminaCost) return;
                 UseStamina(_gunEquipped.staminaCost);
                 _nextFireTime = Time.time + 1f / _gunEquipped.fireRate;
-                _gunEquipped.Fire(gunHoldPoint, this.gameObject);
+                if (_isAiming)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Vector3 targetPoint;
+
+                    if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+                    {
+                        targetPoint = hit.point;
+                    }
+                    else
+                    {
+                        targetPoint = ray.GetPoint(1000f);
+                    }
+
+                     _gunEquipped.Fire(gunHoldPoint, this.gameObject, targetPoint);
+                }
+                else
+                {
+                    _gunEquipped.Fire(gunHoldPoint, this.gameObject);
+                }
+
             }
         }
 

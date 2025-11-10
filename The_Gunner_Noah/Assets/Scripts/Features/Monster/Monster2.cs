@@ -39,8 +39,9 @@ namespace Features.Monster
         {
             if (_hp <= 0)
             {
-                Destroy(gameObject);
+
                 reward.Action();
+                Destroy(gameObject);
             }
         }
     }

@@ -7,9 +7,21 @@ namespace Features.Item.Weapon.Gun
     public class NormalGunData : GunItemData
     {
 
-        public override void Fire(Transform firePoint, GameObject gameObject)
+        public override void Fire(Transform firePoint, GameObject gameObject, Vector3 targetPoint = new Vector3())
         {
-            GameObject bulletObj =  Instantiate(bulletData.bulletPrefab, firePoint.position, firePoint.rotation);
+            Quaternion rotation;
+
+            if (targetPoint != Vector3.zero)
+            {
+                Vector3 direction = (targetPoint - firePoint.position).normalized;
+                rotation = Quaternion.LookRotation(direction);
+            }
+            else
+            {
+                rotation = firePoint.rotation;
+            }
+
+            GameObject bulletObj = Instantiate(bulletData.bulletPrefab, firePoint.position, rotation);
             bulletObj.GetComponent<BulletObject>().SetOwner(gameObject);
         }
     }

@@ -17,6 +17,7 @@ namespace Features.Item.Weapon.Bullet
         }
         public override void Hit(GameObject hitObject)
         {
+            if (owner == null) return;
             if(hitObject.CompareTag(owner.tag)) return;
             IDamageable damageable = hitObject.GetComponent<IDamageable>();
             BsLogger.Log($"Hit: {hitObject.name}");
