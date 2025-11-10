@@ -341,11 +341,11 @@ namespace Features.Player
         {
             if (health.curValue <= 0 || transform.position.y < -10)
             {
-                if (_oriPosForTest != null)
-                {
-                    transform.position = _oriPosForTest;
-                    return;
-                }
+                // if (_oriPosForTest != null)
+                // {
+                //     transform.position = _oriPosForTest;
+                //     return;
+                // }
                 GameManager.Instance.GameOver();
             }
         }

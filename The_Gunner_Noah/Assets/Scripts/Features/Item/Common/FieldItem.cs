@@ -36,7 +36,10 @@ namespace Features.Item.Common
             }
             if (Camera.main != null)
             {
-                infoPanel.transform.LookAt(Camera.main.transform);
+                Transform mainCamTransform = Camera.main.transform;
+                Vector3 lookDirection = transform.position - mainCamTransform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                infoPanel.transform.rotation = targetRotation;
             }
             infoPanel.SetActive(true);
         }
