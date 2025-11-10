@@ -8,6 +8,7 @@ using Features.Inventory;
 using Features.Item.Common;
 using Features.Item.Potion;
 using Features.Item.Weapon.Gun;
+using Features.Tutorial;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -68,6 +69,8 @@ namespace Features.Player
 
         [SerializeField] private TutorialData _waterTutorial;
 
+        [SerializeField] private ParticleSystem _rainParticles;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -88,6 +91,7 @@ namespace Features.Player
             RecoverStamina(stamina.passiveValue * Time.deltaTime);
             CheckAlive();
             HandleEffectWater();
+            MoreMoreRain();
         }
 
         private void FixedUpdate()
@@ -104,6 +108,7 @@ namespace Features.Player
         private void MovePlayer()
         {
             if (IsParkouring) return;
+            if (Time.timeScale == 0) return;
             float horizontal = _isAiming ? 0f : curMovementInput.x;
 
             Vector3 moveDirection = (transform.forward * curMovementInput.y + transform.right * horizontal).normalized;
@@ -122,6 +127,7 @@ namespace Features.Player
 
         private void RotatePlayer()
         {
+            if (Time.timeScale == 0) return;
             if (_isAiming)
             {
                 transform.Rotate(Vector3.up * curMovementInput.x * rotationSpeed);
@@ -226,6 +232,7 @@ namespace Features.Player
 
         private void HandleShooting()
         {
+            if (Time.timeScale == 0) return;
             if (!IsEquipped || !_isShooting)
             {
                 return;
@@ -400,6 +407,12 @@ namespace Features.Player
         public void ReleaseRigidBodyConstraints(RigidbodyConstraints constraints)
         {
             _rigidbody.constraints &= ~constraints;
+        }
+
+        private void MoreMoreRain()
+        {
+            var emission = _rainParticles.emission;
+            emission.rateOverTime = 100 + (int)transform.position.y * 20;
         }
 
     }

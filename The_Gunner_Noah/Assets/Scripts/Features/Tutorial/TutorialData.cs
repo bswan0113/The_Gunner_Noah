@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.Common
+namespace Features.Tutorial
 {
     [CreateAssetMenu(fileName = "Tutorial_", menuName = "Tutorial")]
     public class TutorialData : ScriptableObject

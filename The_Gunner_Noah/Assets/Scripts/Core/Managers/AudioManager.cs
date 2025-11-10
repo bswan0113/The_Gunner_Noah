@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core
+namespace Core.Managers
 {
     public class AudioManager : MonoBehaviour
     {
@@ -24,6 +24,7 @@ namespace Core
         public AudioClip boom;
         public AudioClip detect;
         public AudioClip razor;
+        public AudioClip thunder;
 
         void Awake()
         {

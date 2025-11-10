@@ -1,4 +1,5 @@
 using Core;
+using Core.Managers;
 using Features.Monster;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Features.Obstacles
             base.Update();
             Collider[] colliders = Physics.OverlapSphere(transform.position, detectRange, playerLayer);
 
-
+            if (colliders.Length == 0) return;
             Transform targetPlayer = colliders[0].transform;
             Vector3 directionToPlayer = (targetPlayer.position - transform.position).normalized;
             RaycastHit hit;

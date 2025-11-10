@@ -1,20 +1,22 @@
 using Core.Managers;
-using Features.Common;
 using UnityEngine;
 using Utils;
 
-public class TutorialTrigger : MonoBehaviour
+namespace Features.Tutorial
 {
-    public TutorialData tutorialData;
-    private bool _hasTriggered = false;
-
-    private void OnTriggerEnter(Collider other)
+    public class TutorialTrigger : MonoBehaviour
     {
-        BsLogger.Log($"OnTriggerEnter: {other.name}");
-        if (_hasTriggered) return;
-        if (!other.CompareTag("Player")) return;
+        public TutorialData tutorialData;
+        private bool _hasTriggered = false;
 
-        _hasTriggered = true;
-        StartCoroutine(TutorialManager.Instance.ShowTutorial(tutorialData));
+        private void OnTriggerEnter(Collider other)
+        {
+            BsLogger.Log($"OnTriggerEnter: {other.name}");
+            if (_hasTriggered) return;
+            if (!other.CompareTag("Player")) return;
+
+            _hasTriggered = true;
+            StartCoroutine(TutorialManager.Instance.ShowTutorial(tutorialData));
+        }
     }
 }
