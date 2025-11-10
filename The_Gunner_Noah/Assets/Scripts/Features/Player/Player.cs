@@ -65,6 +65,8 @@ namespace Features.Player
 
         private Vector2 lookInput;
 
+        [SerializeField] private TutorialData _waterTutorial;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -140,6 +142,8 @@ namespace Features.Player
         {
             if (other.CompareTag("Water"))
             {
+                StartCoroutine(TutorialManager.Instance.ShowTutorial(_waterTutorial));
+
                 _isInWater = true;
             }
         }

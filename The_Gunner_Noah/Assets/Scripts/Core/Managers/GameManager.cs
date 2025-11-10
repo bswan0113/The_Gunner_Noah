@@ -20,7 +20,7 @@ namespace Core.Managers
             }
 
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
 
         void Start()
@@ -51,9 +51,24 @@ namespace Core.Managers
             #endif
         }
 
+        void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            gameOverPanel.SetActive(false);
+            Time.timeScale = 1;
+        }
+
         public void Retry()
         {
-            Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

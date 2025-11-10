@@ -1,3 +1,5 @@
+using Core.Managers;
+using Features.Common;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +13,7 @@ namespace Features.Item.Common
         [SerializeField] private GameObject infoPanel;
         [SerializeField] private TextMeshProUGUI nameTextOnPanel;
         [SerializeField] private TextMeshProUGUI descriptionTextOnPanel;
-
+        [SerializeField] TutorialData tutorialData;
         public ItemData GetItemData() => itemData;
 
         private void Awake()
@@ -54,6 +56,13 @@ namespace Features.Item.Common
 
         public void OnPickup()
         {
+            if (tutorialData != null)
+            {
+                TutorialManager.Instance.StartCoroutine(
+                    TutorialManager.Instance.ShowTutorial(tutorialData)
+                );
+            }
+
             Destroy(gameObject);
         }
     }
