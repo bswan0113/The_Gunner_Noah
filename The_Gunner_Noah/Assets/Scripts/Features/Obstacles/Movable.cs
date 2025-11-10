@@ -31,7 +31,7 @@ namespace Features.Obstacles
             _currentTarget = _topPoint;
         }
 
-        void Update()
+        protected virtual void Update()
         {
             transform.position = Vector3.MoveTowards(transform.position, _currentTarget, speed * Time.deltaTime);
 

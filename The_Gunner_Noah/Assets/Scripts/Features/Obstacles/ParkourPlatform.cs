@@ -1,3 +1,4 @@
+using Core;
 using UnityEngine;
 
 namespace Features.Obstacles
@@ -73,6 +74,7 @@ namespace Features.Obstacles
                 {
                     Vector3 parkourVelocity = (moveDirection * moveForwardSpeed) + (Vector3.up * climbUpSpeed);
                     playerRigidbody.velocity = parkourVelocity;
+                    AudioManager.Instance.PlaySfx(AudioManager.Instance.run);
                 }
                 else
                 {

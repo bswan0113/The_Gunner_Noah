@@ -1,4 +1,5 @@
 using System;
+using Core;
 using Features.Common;
 using Features.Item.Weapon.Gun;
 using UnityEngine;
@@ -67,6 +68,7 @@ namespace Features.Monster
             {
                 boss.TakeDamage(2500);
             }
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.die);
             Destroy(gameObject);
         }
 
@@ -99,6 +101,7 @@ namespace Features.Monster
             {
                 if (hit.transform.CompareTag("Player"))
                 {
+                    AudioManager.Instance.PlaySfx(AudioManager.Instance.detect);
                     transform.LookAt(targetPlayer);
                     _state = MonsterState.IsAttacking;
                     return;

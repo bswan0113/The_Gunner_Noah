@@ -1,3 +1,4 @@
+using Core;
 using Features.Item.Weapon.Bullet;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace Features.Item.Weapon.Gun
             }
 
             bulletObj.GetComponent<BulletObject>().SetDirection(direction);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.windBullet);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Core.Managers
         void Start()
         {
             Time.timeScale = 1;
+            AudioManager.Instance.PlayBgm(AudioManager.Instance.bgm);
         }
 
         public void GameOver()
@@ -39,6 +40,7 @@ namespace Core.Managers
         {
             gameOverPanel.SetActive(true);
             clearText.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.clear);
             Time.timeScale = 0;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Core;
 using Core.Managers;
 using Features.Common;
 using Features.Inventory;
@@ -142,8 +143,8 @@ namespace Features.Player
         {
             if (other.CompareTag("Water"))
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.water);
                 StartCoroutine(TutorialManager.Instance.ShowTutorial(_waterTutorial));
-
                 _isInWater = true;
             }
         }
@@ -328,6 +329,7 @@ namespace Features.Player
         public void TakeDamage(float damage)
         {
             health.Subtract(damage);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.ouch);
         }
 
         public void UseStamina(float amount)
@@ -360,6 +362,7 @@ namespace Features.Player
             if (Time.time >= _nextWaterEffectTime)
             {
                 _nextWaterEffectTime  = Time.time + waterEffectInterval;
+
                 if (stamina.curValue > 0)
                 {
                     UseStamina(waterStaminaCost);

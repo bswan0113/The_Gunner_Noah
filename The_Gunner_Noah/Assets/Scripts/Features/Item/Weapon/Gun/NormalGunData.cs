@@ -1,3 +1,4 @@
+using Core;
 using Features.Item.Weapon.Bullet;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Features.Item.Weapon.Gun
 
             GameObject bulletObj = Instantiate(bulletData.bulletPrefab, firePoint.position, rotation);
             bulletObj.GetComponent<BulletObject>().SetOwner(gameObject);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.bullet);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Core;
 using Features.Common;
 using Features.Obstacles;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace Features.Monster
         {
             if (_hp <= 0)
             {
-
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.boom);
                 reward.Action();
                 Destroy(gameObject);
             }
