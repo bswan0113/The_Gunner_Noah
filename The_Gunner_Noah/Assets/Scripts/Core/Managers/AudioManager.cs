@@ -7,7 +7,7 @@ namespace Core.Managers
         public static AudioManager Instance;
 
         [SerializeField]private AudioSource bgmSource;
-        [SerializeField] private AudioSource[] sfxSources;
+        private AudioSource[] _sfxSources;
 
         [Header("BGM Clips")]
         public AudioClip bullet;       // 타이틀 BGM
@@ -34,10 +34,10 @@ namespace Core.Managers
                 return;
             }
             Instance = this;
-            sfxSources = new AudioSource[10];
-            for (int i = 0; i < sfxSources.Length; i++)
+            _sfxSources = new AudioSource[10];
+            for (int i = 0; i < _sfxSources.Length; i++)
             {
-                sfxSources[i] = gameObject.AddComponent<AudioSource>();
+                _sfxSources[i] = gameObject.AddComponent<AudioSource>();
             }
             DontDestroyOnLoad(gameObject);
         }
@@ -53,7 +53,7 @@ namespace Core.Managers
 
         public void PlaySfx(AudioClip clip)
         {
-            foreach (var source in sfxSources)
+            foreach (var source in _sfxSources)
             {
                 if (!source.isPlaying)
                 {

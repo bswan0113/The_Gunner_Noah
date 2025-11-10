@@ -48,7 +48,6 @@ namespace Features.Obstacles
 
                 player.SetPakurState(true);
                 player.ReleaseUseGravity();
-
                 Vector3 initialVelocity = (moveDirection * moveForwardSpeed) + (Vector3.up * climbUpSpeed);
                 playerRigidbody.velocity = initialVelocity;
             }
@@ -75,7 +74,7 @@ namespace Features.Obstacles
                 {
                     Vector3 parkourVelocity = (moveDirection * moveForwardSpeed) + (Vector3.up * climbUpSpeed);
                     playerRigidbody.velocity = parkourVelocity;
-                    AudioManager.Instance.PlaySfx(AudioManager.Instance.run);
+
                 }
                 else
                 {

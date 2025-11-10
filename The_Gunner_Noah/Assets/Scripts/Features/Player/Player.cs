@@ -70,6 +70,7 @@ namespace Features.Player
         [SerializeField] private TutorialData _waterTutorial;
 
         [SerializeField] private ParticleSystem _rainParticles;
+        [SerializeField] private GameObject _inWaterIndicator;
 
         private void Awake()
         {
@@ -77,6 +78,10 @@ namespace Features.Player
             cameraTransform = Camera.main.transform;
             _playerInventory = GetComponentInChildren<PlayerInventory>();
             _oriPosForTest = transform.position;
+            if (_inWaterIndicator != null)
+            {
+                _inWaterIndicator.SetActive(false);
+            }
         }
 
         void Start()
@@ -152,6 +157,7 @@ namespace Features.Player
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.water);
                 StartCoroutine(TutorialManager.Instance.ShowTutorial(_waterTutorial));
                 _isInWater = true;
+                _inWaterIndicator.SetActive(true);
             }
         }
 
@@ -160,6 +166,7 @@ namespace Features.Player
             if (other.CompareTag("Water"))
             {
                 _isInWater = false;
+                _inWaterIndicator.SetActive(false);
             }
         }
 
