@@ -1,4 +1,5 @@
 using Cinemachine;
+using Core.Managers;
 using Features.Inventory;
 using Features.Item;
 using Features.Item.Common;
@@ -50,6 +51,12 @@ namespace Features.UI
 
         private void LockMouse()
         {
+            if (GameManager.Instance.MouseSettingLock)
+            {
+                crossHair.enabled = false;
+                return;
+            }
+
             if ((player.IsAiming || Input.GetKey(KeyCode.LeftAlt)))
             {
                 Cursor.lockState = CursorLockMode.None;

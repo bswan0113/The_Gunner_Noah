@@ -11,6 +11,8 @@ namespace Core.Managers
 
         [SerializeField] GameObject gameOverPanel;
         [SerializeField] private TextMeshProUGUI clearText;
+        private bool _mouseSettingLock;
+        public bool MouseSettingLock => _mouseSettingLock;
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -27,6 +29,7 @@ namespace Core.Managers
         {
             Time.timeScale = 1;
             AudioManager.Instance.PlayBgm(AudioManager.Instance.bgm);
+            _mouseSettingLock = false;
         }
 
         public void GameOver()
@@ -69,16 +72,21 @@ namespace Core.Managers
         {
             gameOverPanel.SetActive(false);
             Time.timeScale = 1;
+            _mouseSettingLock = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         public void Retry()
         {
+            _mouseSettingLock = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
         private void ReleaseMouse()
         {
+            _mouseSettingLock = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }

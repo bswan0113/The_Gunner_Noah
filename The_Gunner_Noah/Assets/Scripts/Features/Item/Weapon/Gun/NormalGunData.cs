@@ -22,7 +22,6 @@ namespace Features.Item.Weapon.Gun
             {
                 rotation = firePoint.rotation;
             }
-
             GameObject bulletObj = Instantiate(bulletData.bulletPrefab, firePoint.position, rotation);
             bulletObj.GetComponent<BulletObject>().SetOwner(gameObject);
             AudioManager.Instance.PlaySfx(AudioManager.Instance.bullet);

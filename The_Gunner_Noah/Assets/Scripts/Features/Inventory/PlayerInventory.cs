@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Managers;
 using Features.Item;
 using Features.Item.Common;
 using TMPro;
@@ -54,6 +55,11 @@ namespace Features.Inventory
 
             if (type == InventoryType.Gun)
             {
+                if (_currentIndex[type] != 0)
+                {
+                    AudioManager.Instance.PlaySfx(AudioManager.Instance.reload);
+                }
+
                 UpdateGunUI();
             }
             else if (type == InventoryType.Potion)

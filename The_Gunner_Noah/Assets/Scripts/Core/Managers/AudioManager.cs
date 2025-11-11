@@ -25,6 +25,7 @@ namespace Core.Managers
         public AudioClip detect;
         public AudioClip razor;
         public AudioClip thunder;
+        public AudioClip reload;
 
         void Awake()
         {

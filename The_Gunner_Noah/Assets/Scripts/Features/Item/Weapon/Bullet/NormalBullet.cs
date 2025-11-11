@@ -9,6 +9,7 @@ namespace Features.Item.Weapon.Bullet
         protected override void Start()
         {
             base.Start();
+            transform.Rotate(0, 0, 90f);
             if (_speed > 0f && _range > 0f)
             {
                 float lifetime = _range / _speed;
