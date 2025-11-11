@@ -43,6 +43,7 @@ namespace Features.Obstacles
         {
             if (other.CompareTag("Player"))
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.run);
                 Player.Player player = other.GetComponent<Player.Player>();
                 Rigidbody playerRigidbody = other.GetComponent<Rigidbody>();
 

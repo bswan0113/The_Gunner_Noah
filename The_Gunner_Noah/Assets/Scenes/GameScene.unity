@@ -4239,12 +4239,12 @@ MonoBehaviour:
   water: {fileID: 8300000, guid: 29ffe67401d104c4cbcd6f60e8ad006e, type: 3}
   die: {fileID: 8300000, guid: bada1618e93568d4a882970c6130f05a, type: 3}
   bgm: {fileID: 8300000, guid: 4de7033814499a14e8279acb440e89e4, type: 3}
-  run: {fileID: 8300000, guid: ab20a20a92bc13a4d9ff66804267af01, type: 3}
+  run: {fileID: 8300000, guid: 77a30909fafbe40419d30b9c1e9d24f5, type: 3}
   clear: {fileID: 8300000, guid: 180c9e10d6bec55488f863df22498b94, type: 3}
-  ouch: {fileID: 8300000, guid: c80d3db52ec14b546b866d405e18d6a7, type: 3}
+  ouch: {fileID: 8300000, guid: 5fb4743b93e388048b50db9e478d9349, type: 3}
   boom: {fileID: 8300000, guid: 08edbadd0c96e7543bc63fa8ec949132, type: 3}
   detect: {fileID: 8300000, guid: 071777a2f92c3fe4489031674ae8dbd9, type: 3}
-  razor: {fileID: 0}
+  razor: {fileID: 8300000, guid: b3b5a5f5447e60249ae1d4ed19131c0d, type: 3}
   thunder: {fileID: 8300000, guid: ba516bc6601901847a7908bac2f6a815, type: 3}
 --- !u!4 &586655322 stripped
 Transform:
