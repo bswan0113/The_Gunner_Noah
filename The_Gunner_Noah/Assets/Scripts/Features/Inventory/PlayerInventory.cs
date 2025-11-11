@@ -55,7 +55,7 @@ namespace Features.Inventory
 
             if (type == InventoryType.Gun)
             {
-                if (_currentIndex[type] != 0)
+                if (_inventory[type].Count > 1)
                 {
                     AudioManager.Instance.PlaySfx(AudioManager.Instance.reload);
                 }
