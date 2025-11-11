@@ -34,7 +34,7 @@ namespace Core.Managers
                 return;
             }
             Instance = this;
-            _sfxSources = new AudioSource[10];
+            _sfxSources = new AudioSource[30];
             for (int i = 0; i < _sfxSources.Length; i++)
             {
                 _sfxSources[i] = gameObject.AddComponent<AudioSource>();

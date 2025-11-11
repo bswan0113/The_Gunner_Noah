@@ -1,9 +1,11 @@
+using Cinemachine;
 using Features.Inventory;
 using Features.Item;
 using Features.Item.Common;
 using Features.Item.Potion;
 using Features.Item.Weapon.Gun;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Features.UI
 {
@@ -23,11 +25,13 @@ namespace Features.UI
         public Material transparentMaterial;
         private GameObject lastFadedObject;
         private Material originalMaterial;
+        [SerializeField]private Image crossHair;
 
         // private FocusState _currentFocusState;
         void Start()
         {
-            // Cursor.visible = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             // _currentFocusState = FocusState.Normal;
         }
         void Awake()
@@ -41,14 +45,27 @@ namespace Features.UI
             CheckForItemBase();
             HandlePickup();
             Perspective();
-
-            // TryFire();
+            LockMouse();
         }
+
+        private void LockMouse()
+        {
+            if ((player.IsAiming || Input.GetKey(KeyCode.LeftAlt)))
+            {
+                Cursor.lockState = CursorLockMode.None;
+                crossHair.enabled = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                crossHair.enabled = false;
+            }
+        }
+
         void FixedUpdate()
         {
             transform.position = Input.mousePosition;
         }
-
         void CheckForItemBase(){
 
             if (Time.time - _lastCheckTime > _checkInterval)

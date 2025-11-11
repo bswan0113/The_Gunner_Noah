@@ -61,6 +61,7 @@ namespace Features.Player
         private bool IsParkouring = false;
 
         private bool _isAiming = false;
+        public bool IsAiming => _isAiming;
 
         [SerializeField] CinemachineVirtualCamera fpsCamera;
         [SerializeField] CinemachineFreeLook tpsCamera;
@@ -97,7 +98,11 @@ namespace Features.Player
             CheckAlive();
             HandleEffectWater();
             MoreMoreRain();
+
+
         }
+
+
 
         private void FixedUpdate()
         {

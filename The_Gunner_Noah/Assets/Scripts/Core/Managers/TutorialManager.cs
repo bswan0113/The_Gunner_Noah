@@ -29,7 +29,6 @@ namespace Core.Managers
 
         public IEnumerator ShowTutorial(TutorialData tutorialData)
         {
-            Debug.Log($"Tutorial requested: {tutorialData.name}, Already completed: {_completedTutorials.Contains(tutorialData)}");
             if (_completedTutorials.Contains(tutorialData))
             {
                 yield break;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2595e86b18ef40228e6c4bf168ee7cdb, type: 3}
   m_Name: Tutorial_Shoot
   m_EditorClassIdentifier: 
-  tutorialText: That red box will attack you when you get close. You can respond
-    by clicking the 'left mouse button', and it's a little easier to 'right-click'.
+  tutorialText: Time to shut up that red box that's been buzzing in your ear this
+    whole time. You can respond with the 'left mouse button', and it's a little easier
+    to 'right-click'.
   duration: 3

@@ -1,11 +1,10 @@
 using System;
-using Core;
 using Core.Managers;
 using Features.Common;
 using Features.Item.Weapon.Gun;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
+using Random = UnityEngine.Random;
 
 namespace Features.Monster
 {
@@ -21,7 +20,9 @@ namespace Features.Monster
         [SerializeField] private Slider hpBar;
 
         [SerializeField] private GunItemData equipedItem;
-        [SerializeField] private float attackDelay = 1;
+        [SerializeField] public float minAttackDelay = 0.3f;
+        [SerializeField] public float maxAttackDelay = 2f;
+        private float _currentAttackDelay;
         private float _lastAttackTime;
 
         [SerializeField]private float detectRange = 1f;
@@ -33,6 +34,7 @@ namespace Features.Monster
         [SerializeField] private bool isGimic = false;
         [SerializeField] private Monster2 boss;
 
+        private bool _detectPlayer;
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -44,6 +46,7 @@ namespace Features.Monster
 
         void Start()
         {
+            _currentAttackDelay = Random.Range(minAttackDelay, maxAttackDelay);
         }
 
 
@@ -77,10 +80,11 @@ namespace Features.Monster
         {
             if(equipedItem == null) return;
             if (_state == MonsterState.Sleeping) return;
-            if (Time.time >= _lastAttackTime + attackDelay)
+            if (Time.time >= _lastAttackTime + _currentAttackDelay)
             {
                 equipedItem.Fire(gameObject.transform, gameObject);
                 _lastAttackTime = Time.time;
+                _currentAttackDelay = Random.Range(minAttackDelay, maxAttackDelay);
             }
         }
 
@@ -102,7 +106,11 @@ namespace Features.Monster
             {
                 if (hit.transform.CompareTag("Player"))
                 {
-                    AudioManager.Instance.PlaySfx(AudioManager.Instance.detect);
+                    if (!_detectPlayer)
+                    {
+                        AudioManager.Instance.PlaySfx(AudioManager.Instance.detect);
+                        _detectPlayer = true;
+                    }
                     transform.LookAt(targetPlayer);
                     _state = MonsterState.IsAttacking;
                     return;
@@ -111,11 +119,11 @@ namespace Features.Monster
             _state = MonsterState.Sleeping;
         }
 
-        // private void OnDrawGizmos()
-        // {
-        //     Gizmos.color = Color.yellow;
-        //     Gizmos.DrawWireSphere(transform.position, detectRange);
-        // }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, detectRange);
+        }
 
 
         public enum MonsterState

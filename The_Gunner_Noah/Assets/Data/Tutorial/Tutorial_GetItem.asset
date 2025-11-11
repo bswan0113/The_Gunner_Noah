@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2595e86b18ef40228e6c4bf168ee7cdb, type: 3}
   m_Name: Tutorial_GetItem
   m_EditorClassIdentifier: 
-  tutorialText: You can check the information by hovering your mouse over the green
-    box, and you can obtain it by pressing 'E'.
+  tutorialText: You'll have to hold Alt to get the cursor working first. Then, maybe
+    'E' will do something.
   duration: 3

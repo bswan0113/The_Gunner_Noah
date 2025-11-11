@@ -16,7 +16,5 @@ MonoBehaviour:
   itemDescription: A normal gun that can inflict damage
   gunType: 0
   fireRate: 10
-  ammoCapacity: 30
-  reloadTime: 1
   staminaCost: 10
   bulletData: {fileID: 11400000, guid: 382132327a1befa49a504ff1aa05bc73, type: 2}

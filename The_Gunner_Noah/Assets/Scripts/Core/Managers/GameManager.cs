@@ -31,6 +31,7 @@ namespace Core.Managers
 
         public void GameOver()
         {
+            ReleaseMouse();
             clearText.gameObject.SetActive(false);
             gameOverPanel.SetActive(true);
             Time.timeScale = 0;
@@ -38,6 +39,7 @@ namespace Core.Managers
 
         public void GameClear()
         {
+            ReleaseMouse();
             gameOverPanel.SetActive(true);
             clearText.gameObject.SetActive(true);
             AudioManager.Instance.PlaySfx(AudioManager.Instance.clear);
@@ -72,6 +74,13 @@ namespace Core.Managers
         public void Retry()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+        private void ReleaseMouse()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

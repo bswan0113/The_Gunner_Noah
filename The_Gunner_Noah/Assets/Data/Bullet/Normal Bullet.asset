@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Normal Bullet
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 393847087913339460, guid: 5de52bab3f8ece642a6da84410ac99d0, type: 3}
-  speed: 100
+  speed: 50
   damage: 10
   range: 100

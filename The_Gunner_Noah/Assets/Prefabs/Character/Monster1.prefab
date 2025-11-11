@@ -387,6 +387,12 @@ MonoBehaviour:
   hpBar: {fileID: 8591232867208593877}
   equipedItem: {fileID: 11400000, guid: 500ede2d5905d9541ba205827d651420, type: 2}
   attackDelay: 1
+  detectRange: 20
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  isGimic: 0
+  boss: {fileID: 0}
 --- !u!1 &5740550573108494102
 GameObject:
   m_ObjectHideFlags: 0
