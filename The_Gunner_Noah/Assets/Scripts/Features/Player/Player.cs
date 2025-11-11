@@ -204,6 +204,7 @@ namespace Features.Player
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if(Time.timeScale == 0) return;
             if (stamina.curValue < jumpStamina) return;
             if (context.phase == InputActionPhase.Performed && IsGrounded())
             {

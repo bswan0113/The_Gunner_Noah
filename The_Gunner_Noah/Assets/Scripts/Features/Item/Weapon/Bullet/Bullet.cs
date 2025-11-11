@@ -30,7 +30,7 @@ namespace Features.Item.Weapon.Bullet
         protected virtual void Start()
         {
             _rigidbody.velocity = transform.forward * _speed;
-            // _rigidbody.AddTorque(transform.forward * 1000f);
+            _rigidbody.AddTorque(transform.forward * 1000f);
         }
 
         public void SetOwner(GameObject ownerObject)
