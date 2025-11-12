@@ -72,7 +72,7 @@ namespace Features.Player
 
         [SerializeField] private ParticleSystem _rainParticles;
         [SerializeField] private GameObject _inWaterIndicator;
-
+        [SerializeField] private LayerMask shootableMask;
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -261,7 +261,7 @@ namespace Features.Player
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Vector3 targetPoint;
 
-                    if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+                    if (Physics.Raycast(ray, out RaycastHit hit, 1000f, shootableMask))
                     {
                         targetPoint = hit.point;
                     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4375237665827823573}
   - component: {fileID: 5763153281315125587}
   - component: {fileID: 8495219124397101206}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Tutoral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768a64647609482eaa07e86146156a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialData: {fileID: 11400000, guid: 3b41c5e7205c9a543801c5db80abaaad, type: 2}
+  tutorialData: {fileID: 11400000, guid: 9d597fb5d8defd14684c35f4529cc409, type: 2}
 --- !u!65 &8495219124397101206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65,5 +65,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 4, y: 2, z: 4}
   m_Center: {x: 0, y: 0, z: 0}

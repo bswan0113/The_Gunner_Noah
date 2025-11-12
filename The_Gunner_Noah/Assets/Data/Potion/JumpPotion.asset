@@ -16,5 +16,5 @@ MonoBehaviour:
   itemDescription: Jump power increases significantly for a certain period of time.
   amount: 2
   potionType: 0
-  duration: 9999
+  duration: 3.5
   targetStat: 1
